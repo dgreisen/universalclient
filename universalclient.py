@@ -41,7 +41,7 @@ class Client(object):
         methods = _getattr("methods")
         if calledAttr.lower() in methods:
             # create new client with updated method, and call it
-            return self.setArgs(method=calledAttr.lower()).call(*args, **kwargs)
+            return self.setArgs(method=calledAttr.lower()).call(*args)
 
         return _getattr(calledAttr)(*args, **kwargs)
 
@@ -57,13 +57,9 @@ class Client(object):
         passing as arguments any *args passed to call.
         """
         # update with any last-minute modifications to the attributes
-        c = self.setArgs(kwargs) if kwargs else self
-
+        c = self.setArgs(**kwargs) if kwargs else self
         attributes = c._cloneAttributes()
         requests = attributes.pop("_http")
-        # remove uneeded attributes
-        for attr in ["_path"]:
-            attributes.pop(attr)
 
         # run the data through the dataFilter if both exist
         if "data" in attributes and "dataFilter" in attributes:
@@ -71,6 +67,11 @@ class Client(object):
 
         # format and set the url
         attributes["url"] = c._getUrl().format(*args)
+
+        # remove uneeded attributes
+        for attr in ["_path", "dataFilter"]:
+            attributes.pop(attr, None)
+
         #make the request
         return requests.request(**attributes)
 
@@ -112,6 +113,7 @@ class Client(object):
         """
         attributes = self._cloneAttributes()
         attributes["_path"].append(pathPart)
+        return Client(**attributes)
 
     def _cloneAttributes(self):
         """
