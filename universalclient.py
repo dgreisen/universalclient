@@ -41,7 +41,7 @@ class Client(object):
         methods = _getattr("methods")
         if calledAttr.lower() in methods:
             # create new client with updated method, and call it
-            return self.setArgs(method=calledAttr.lower()).call(*args)
+            return self.setArgs(method=calledAttr.lower()).call(*args, **kwargs)
 
         return _getattr(calledAttr)(*args, **kwargs)
 
