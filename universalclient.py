@@ -41,20 +41,20 @@ class Client(object):
         methods = _getattr("methods")
         if calledAttr.lower() in methods:
             # create new client with updated method, and call it
-            return self.setArgs(method=calledAttr.lower()).call(*args, **kwargs)
+            return self.setArgs(method=calledAttr.lower()).request(*args, **kwargs)
 
         return _getattr(calledAttr)(*args, **kwargs)
 
-    def call(self, *args, **kwargs):
+    def request(self, *args, **kwargs):
         """
-        make a call to the server. Any kwargs passed to call will override the
+        make a request to the server. Any kwargs passed to request will override the
         attributes passed to requests.request.
 
         calls the function at dataFilter with the contents of the data
         attribute iff dataFilter and data exist
 
         runs the url through format (http://docs.python.org/2/library/string.html#formatspec)
-        passing as arguments any *args passed to call.
+        passing as arguments any *args passed to request.
         """
         # update with any last-minute modifications to the attributes
         c = self.setArgs(**kwargs) if kwargs else self
@@ -105,7 +105,7 @@ class Client(object):
             attributes.pop(attr)
         return Client(**attributes)
 
-    def append(self, pathPart):
+    def _(self, pathPart):
         """
         append a path part to the url. Should be used when the pathPart to
         append is not valid python dot notation. Can use positional, but
@@ -135,7 +135,7 @@ class Client(object):
     def __dir__(self):
         _getattr = super(Client, self).__getattribute__
         methods = _getattr("methods")
-        methods += ("setArgs", "getArgs", "delArgs", "append", "oauth", "call", "append")
+        methods += ("setArgs", "getArgs", "delArgs", "_", "oauth", "request")
         return list(methods)
 
 jsonFilter = lambda data: json.dumps(data)
