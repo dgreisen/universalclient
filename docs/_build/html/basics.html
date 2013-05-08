@@ -52,18 +52,18 @@
   <div class="section" id="basics">
 <h1>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="creating-a-url">
-<h2>Creating a url<a class="headerlink" href="#creating-a-url" title="Permalink to this headline">¶</a></h2>
+<h2>Creating a URL<a class="headerlink" href="#creating-a-url" title="Permalink to this headline">¶</a></h2>
 <p>UniversalClient is a wrapper around the excellent <a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">Requests</a>
-library for making http requests. Lets create a client for a fictitious photo sharing service.</p>
+library for making HTTP requests. Lets create a client for a fictitious photo sharing service.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">universalClient</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="go"># create a client pointing to myImages.com</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span>
 <span class="go">get: http://myImages.com</span>
 </pre></div>
 </div>
-<p>A client object is returned. In this case, the client object points to the url &#8220;<a class="reference external" href="http://myImages.com">http://myImages.com</a>&#8221; and has defaulted
-to the &#8220;get&#8221; http method. We can add to this base url using dot notation. Adding an attribute to the client will
-return a new Client with the name of that attribute appended to the initial Client&#8217;s url.</p>
+<p>A client object is returned. In this case, the client object points to the URL &#8220;<a class="reference external" href="http://myImages.com">http://myImages.com</a>&#8221; and has defaulted
+to the &#8220;get&#8221; HTTP method. We can add to this base URL using dot notation. Adding an attribute to the client will
+return a new Client with the name of that attribute appended to the initial Client&#8217;s URL.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">images</span>
 <span class="go">get: http://myImages.com/user</span>
 </pre></div>
@@ -109,7 +109,7 @@ client.get(), client.post(), etc will be passed directly to request.request(),</
 <span class="go">{&#39;_http&#39;: &lt;module &#39;requests&#39; from &#39;/usr/local/lib/python2.7/dist-packages/requests/__init__.pyc&#39;&gt;, &#39;method&#39;: &#39;put&#39;, &#39;auth&#39;: (&#39;user&#39;, &#39;pass&#39;), &#39;_path&#39;: [&#39;http://myImages.com&#39;, &#39;user&#39;, &#39;dgreisen&#39;, &#39;images&#39;]}</span>
 </pre></div>
 </div>
-<p>You will notice there are a couple of other key/values in there starting with an undescore. Underscores keys are not passed to
+<p>You will notice there are a couple of other keys/values in there starting with an underscore. Underscores keys are not passed to
 requests.request(). You can read about some of them in the <a class="reference internal" href="advanced.html"><em>Advanced</em></a> section.</p>
 <p>If you set an argument that already has a value, it will be overridden. You can also delete an existing value:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">getAllImages</span> <span class="o">=</span> <span class="n">uploadImage</span><span class="o">.</span><span class="n">delArgs</span><span class="p">(</span><span class="s">&quot;method&quot;</span><span class="p">)</span>
@@ -130,7 +130,7 @@ requests.request(). You can read about some of them in the <a class="reference i
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Basics</a><ul>
-<li><a class="reference internal" href="#creating-a-url">Creating a url</a></li>
+<li><a class="reference internal" href="#creating-a-url">Creating a URL</a></li>
 <li><a class="reference internal" href="#making-requests">Making requests</a></li>
 <li><a class="reference internal" href="#arguments">Arguments</a></li>
 </ul>

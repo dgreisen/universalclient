@@ -48,15 +48,15 @@
   <div class="section" id="advanced">
 <h1>Advanced<a class="headerlink" href="#advanced" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="creating-a-url">
-<h2>Creating a url<a class="headerlink" href="#creating-a-url" title="Permalink to this headline">¶</a></h2>
-<p>The url we created in <a class="reference internal" href="basics.html"><em>Basics</em></a> section,</p>
+<h2>Creating a URL<a class="headerlink" href="#creating-a-url" title="Permalink to this headline">¶</a></h2>
+<p>The URL we created in <a class="reference internal" href="basics.html"><em>Basics</em></a> section,</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">images</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">davidsImages</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">dgreisen</span>
 </pre></div>
 </div>
 <p>is great if we are doing a bunch of stuff to davidsImages. But what if we want to be able to pass in the userid that isn&#8217;t
 known until runtime. That&#8217;s when the _ (underscore) method is used. The argument to _ will be added
-to the url, just as if it were appended with dot notation:</p>
+to the URL, just as if it were appended with dot notation:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">somebody</span> <span class="o">=</span> <span class="s">&quot;jsmith&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">somebodysImages</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="n">somebody</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">somebodysImages</span>
@@ -111,7 +111,7 @@ has not been tested. Tests and bug reports are welcome.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Advanced</a><ul>
-<li><a class="reference internal" href="#creating-a-url">Creating a url</a></li>
+<li><a class="reference internal" href="#creating-a-url">Creating a URL</a></li>
 <li><a class="reference internal" href="#data-formatting">Data formatting</a></li>
 <li><a class="reference internal" href="#oauth">Oauth</a></li>
 </ul>

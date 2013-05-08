@@ -1,17 +1,17 @@
 Advanced
 ========
 
-Creating a url
+Creating a URL
 --------------
 
-The url we created in :doc:`basics` section,
+The URL we created in :doc:`basics` section,
 
 	>>> root = Client("http://myImages.com").images
 	>>> davidsImages = root.user.dgreisen
 
 is great if we are doing a bunch of stuff to davidsImages. But what if we want to be able to pass in the userid that isn't 
 known until runtime. That's when the _ (underscore) method is used. The argument to _ will be added
-to the url, just as if it were appended with dot notation:
+to the URL, just as if it were appended with dot notation:
 
 	>>> somebody = "jsmith"
 	>>> somebodysImages = root.user._(somebody)

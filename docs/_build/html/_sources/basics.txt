@@ -1,20 +1,20 @@
 Basics
 ======
 
-Creating a url
+Creating a URL
 --------------
 
 UniversalClient is a wrapper around the excellent `Requests <http://docs.python-requests.org/en/latest/index.html>`_ 
-library for making http requests. Lets create a client for a fictitious photo sharing service.
+library for making HTTP requests. Lets create a client for a fictitious photo sharing service.
 
    >>> from universalClient import Client
    # create a client pointing to myImages.com
    >>> Client("http://myImages.com")
    get: http://myImages.com
 
-A client object is returned. In this case, the client object points to the url "http://myImages.com" and has defaulted
-to the "get" http method. We can add to this base url using dot notation. Adding an attribute to the client will
-return a new Client with the name of that attribute appended to the initial Client's url.
+A client object is returned. In this case, the client object points to the URL "http://myImages.com" and has defaulted
+to the "get" HTTP method. We can add to this base URL using dot notation. Adding an attribute to the client will
+return a new Client with the name of that attribute appended to the initial Client's URL.
 
 	>>> Client("http://myImages.com").images
 	get: http://myImages.com/user
@@ -63,7 +63,7 @@ You can display all the arguments:
 	>>> uploadImage.getArgs()
 	{'_http': <module 'requests' from '/usr/local/lib/python2.7/dist-packages/requests/__init__.pyc'>, 'method': 'put', 'auth': ('user', 'pass'), '_path': ['http://myImages.com', 'user', 'dgreisen', 'images']}
 
-You will notice there are a couple of other key/values in there starting with an undescore. Underscores keys are not passed to
+You will notice there are a couple of other keys/values in there starting with an underscore. Underscores keys are not passed to
 requests.request(). You can read about some of them in the :doc:`advanced` section.
 
 If you set an argument that already has a value, it will be overridden. You can also delete an existing value:
