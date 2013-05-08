@@ -23,7 +23,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Universal Client 0.1 documentation" href="#" /> 
+    <link rel="top" title="Universal Client 0.1 documentation" href="#" />
+    <link rel="next" title="Basics" href="basics.html" /> 
   </head>
   <body>
     <div class="related">
@@ -32,6 +33,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="basics.html" title="Basics"
+             accesskey="N">next</a> |</li>
         <li><a href="#">Universal Client 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -43,37 +47,49 @@
             
   <div class="section" id="universal-client">
 <h1>Universal Client<a class="headerlink" href="#universal-client" title="Permalink to this headline">¶</a></h1>
-<p>Universal Client is a <cite>Apache 2 &lt;http://www.apache.org/licenses/LICENSE-2.0.html&gt;</cite>
+<p>Universal Client is a <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2</a>
 licensed client for quickly and easily interacting with any REST api.</p>
 <p>You want to use a cool api, but the python client doesn&#8217;t exist, or is out of date,
 or doesn&#8217;t support the feature you want to use. So you start making raw http
-requests but even with the <cite>best http library &lt;http://docs.python-requests.org/en/latest/index.html</cite>
+requests but even with the <a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">best http library</a>
 passing in the right url and options for every call is error prone and quickly
 becomes cumbersome for anything more than trivial scenarios.</p>
 <p>The Universal Client is a wrapper around the excellent
-<cite>Requests &lt;http://docs.python-requests.org/en/latest/index.html</cite> http library. A Client instance
+<a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">Requests</a> http library. A Client instance
 corresponds to a single endpoind in the api. use dot notation to navigate the api paths. You
-can set any requests parameters on a client instance and all child instances will inherit those
+can set any Requests parameters on a client instance and all child instances will inherit those
 parameters.</p>
 <p>A quick example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">universalClient</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="go"># create a client pointing to google</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">google</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;http://google.com&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">google</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://google.com&quot;</span><span class="p">)</span>
 <span class="go"># set a google cookie so we get &quot;personalized&quot; results (Yay!)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">google</span> <span class="o">=</span> <span class="n">google</span><span class="o">.</span><span class="n">setArgs</span><span class="p">(</span><span class="n">cookies</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;gv&quot;</span><span class="p">:</span> <span class="s">&quot;5d41402abc4b2a76b9719d911017c592&quot;</span><span class="p">})</span>
 <span class="go"># get the google home page at http://google.com</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span> <span class="o">=</span> <span class="n">google</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go"># create an end point to google images, which inherits the cookies</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">images</span> <span class="o">=</span> <span class="n">google</span><span class="o">.</span><span class="n">images</span>
-<span class="go"># get google images at http://google.com/images</span>
+<span class="go"># get google site at http://google.com/images</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>The Client stores a complete api call. It is imutable - any modification returns a new clientwhen you modify it, it returns a new
-client The client is immutable. When you modify it, it returns a new
-Contents:</p>
+<p>The Client stores a complete api call. It is imutable - any modification returns a new client. This allows
+you to reuse endpoints over and over.</p>
+<p>Contents:</p>
 <div class="toctree-wrapper compound">
-<ul class="simple">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#creating-a-url">Creating a url</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#making-requests">Making requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#arguments">Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html#creating-a-url">Creating a url</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html#data-formatting">Data formatting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html#oauth">Oauth</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -100,6 +116,9 @@ Contents:</p>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
+  <h4>Next topic</h4>
+  <p class="topless"><a href="basics.html"
+                        title="next chapter">Basics</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -128,6 +147,9 @@ Contents:</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="basics.html" title="Basics"
+             >next</a> |</li>
         <li><a href="#">Universal Client 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>

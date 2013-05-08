@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Basics &mdash; Universal Client 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Universal Client 0.1 documentation" href="index.html" />
+    <link rel="next" title="Advanced" href="advanced.html" />
+    <link rel="prev" title="Universal Client" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="advanced.html" title="Advanced"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Universal Client"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Universal Client 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="basics">
+<h1>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="creating-a-url">
+<h2>Creating a url<a class="headerlink" href="#creating-a-url" title="Permalink to this headline">¶</a></h2>
+<p>UniversalClient is a wrapper around the excellent <a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">Requests</a>
+library for making http requests. Lets create a client for a fictitious photo sharing service.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">universalClient</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="go"># create a client pointing to myImages.com</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span>
+<span class="go">get: http://myImages.com</span>
+</pre></div>
+</div>
+<p>A client object is returned. In this case, the client object points to the url &#8220;<a class="reference external" href="http://myImages.com">http://myImages.com</a>&#8221; and has defaulted
+to the &#8220;get&#8221; http method. We can add to this base url using dot notation. Adding an attribute to the client will
+return a new Client with the name of that attribute appended to the initial Client&#8217;s url.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">images</span>
+<span class="go">get: http://myImages.com/user</span>
+</pre></div>
+</div>
+<p>Clients are immutable:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">images</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">davidsImages</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">dgreisen</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">root</span>
+<span class="go">get: http://myImages.com</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">davidsImages</span>
+<span class="go">get: http://myImages.com/user/dgreisen</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="making-requests">
+<h2>Making requests<a class="headerlink" href="#making-requests" title="Permalink to this headline">¶</a></h2>
+<p>You can make the default request by calling client.request(), which returns a Requests response object. You can make
+a specific type of request by calling that function:</p>
+<blockquote>
+<div># make the default get request
+&gt;&gt;&gt; davidsImages.request()
+&lt;Response [200]&gt;
+# make a head request
+&gt;&gt;&gt; davidsImages.head()
+&lt;Response [200]&gt;</div></blockquote>
+</div>
+<div class="section" id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
+<p>Any keyword argument available for Requests.request can be set on your client. You can do this when a client is created, any time
+after creation, or just before sending the request. Any kwargs passed to Client(), client.setArgs(), client.request(), or
+client.get(), client.post(), etc will be passed directly to request.request(),</p>
+<blockquote>
+<div><p># at creation:
+&gt;&gt;&gt; root = Client(&#8220;<a class="reference external" href="http://myImages.com">http://myImages.com</a>&#8221;, auth=(&#8216;user&#8217;, &#8216;pass&#8217;))</p>
+<p># updating any client after initial creation:
+&gt;&gt;&gt; uploadImage = root.user.dgreisen.images.setArgs(method=&#8221;put&#8221;)</p>
+<p># just before sending the request
+&gt;&gt;&gt; uploadImage.request(files={&#8216;file&#8217;: open(&#8216;birthdayBash.jpg&#8217;, &#8216;rb&#8217;))
+&lt;Response [200]&gt;</p>
+</div></blockquote>
+<p>You can display all the arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">uploadImage</span><span class="o">.</span><span class="n">getArgs</span><span class="p">()</span>
+<span class="go">{&#39;_http&#39;: &lt;module &#39;requests&#39; from &#39;/usr/local/lib/python2.7/dist-packages/requests/__init__.pyc&#39;&gt;, &#39;method&#39;: &#39;put&#39;, &#39;auth&#39;: (&#39;user&#39;, &#39;pass&#39;), &#39;_path&#39;: [&#39;http://myImages.com&#39;, &#39;user&#39;, &#39;dgreisen&#39;, &#39;images&#39;]}</span>
+</pre></div>
+</div>
+<p>You will notice there are a couple of other key/values in there starting with an undescore. Underscores keys are not passed to
+requests.request(). You can read about some of them in the <a class="reference internal" href="advanced.html"><em>Advanced</em></a> section.</p>
+<p>If you set an argument that already has a value, it will be overridden. You can also delete an existing value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">getAllImages</span> <span class="o">=</span> <span class="n">uploadImage</span><span class="o">.</span><span class="n">delArgs</span><span class="p">(</span><span class="s">&quot;method&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;method&quot;</span> <span class="ow">in</span> <span class="n">getAllImages</span><span class="o">.</span><span class="n">getArgs</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Every key passed to delArgs will be deleted. No error will be thrown if an argument to be deleted does not exist.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Basics</a><ul>
+<li><a class="reference internal" href="#creating-a-url">Creating a url</a></li>
+<li><a class="reference internal" href="#making-requests">Making requests</a></li>
+<li><a class="reference internal" href="#arguments">Arguments</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Universal Client</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="advanced.html"
+                        title="next chapter">Advanced</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/basics.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="advanced.html" title="Advanced"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Universal Client"
+             >previous</a> |</li>
+        <li><a href="index.html">Universal Client 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, David Greisen.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
