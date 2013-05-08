@@ -39,7 +39,7 @@ The Client stores a complete api call. It is immutable - any modification return
 you to reuse endpoints over and over.
 
 Universal Client features:
-    * oauth support through rauth
-    * string formatting for URLs
-    * supports every argument supported by Requests
-    * custom data formatting for POST requests
+ * oauth support through rauth
+ * string formatting for URLs
+ * supports every argument supported by Requests
+ * custom data formatting for POST requests
