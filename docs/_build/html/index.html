@@ -47,18 +47,13 @@
             
   <div class="section" id="universal-client">
 <h1>Universal Client<a class="headerlink" href="#universal-client" title="Permalink to this headline">¶</a></h1>
-<p>Universal Client is a <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2</a>
-licensed client for quickly and easily interacting with any REST api.</p>
-<p>You want to use a cool api, but the python client doesn&#8217;t exist, or is out of date,
-or doesn&#8217;t support the feature you want to use. So you start making raw HTTP
-requests but even with the <a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">best http library</a>
-passing in the right URL and options for every call is error prone and quickly
-becomes cumbersome for anything more than trivial scenarios.</p>
-<p>The Universal Client is a wrapper around the excellent
-<a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">Requests</a> HTTP library. A Client instance
-corresponds to a single endpoint in the api. use dot notation to navigate the api paths. You
-can set any Requests parameters on a client instance and all child instances will inherit those
-parameters.</p>
+<p>Universal Client is a <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2</a> licensed client for quickly and easily interacting with any REST api.</p>
+<p>You want to use a cool api, but the python client doesn&#8217;t exist, or is out of date, or doesn&#8217;t support the feature you want to use.
+So you start making raw HTTP requests.
+But, even with the <a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">best http library</a>, passing in the right URL and options for every call is error prone and quickly becomes cumbersome for anything more than trivial scenarios.</p>
+<p>The Universal Client is a wrapper around the excellent <a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">Requests</a> HTTP library.
+A Client instance corresponds to a single endpoint in the api.
+Use dot notation to navigate the api paths. You can set any Requests parameters on a client instance and all child instances will inherit those parameters.</p>
 <p>A quick example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">universalclient</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="go"># create a client pointing to google</span>
@@ -73,8 +68,9 @@ parameters.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>The Client stores a complete api call. It is immutable - any modification returns a new client. This allows
-you to reuse endpoints over and over.</p>
+<p>The Client stores a complete api call.
+It is immutable - any modification returns a new client.
+This allows you to reuse endpoints over and over.</p>
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>

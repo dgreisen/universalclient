@@ -1,20 +1,15 @@
 Universal Client
 ================
 
-Universal Client is a `Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>`_ 
-licensed client for quickly and easily interacting with any REST api.
+Universal Client is a `Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>`_ licensed client for quickly and easily interacting with any REST api.
 
-You want to use a cool api, but the python client doesn't exist, or is out of date, 
-or doesn't support the feature you want to use. So you start making raw HTTP
-requests but even with the `best http library <http://docs.python-requests.org/en/latest/index.html>`_ 
-passing in the right URL and options for every call is error prone and quickly
-becomes cumbersome for anything more than trivial scenarios.
+You want to use a cool api, but the python client doesn't exist, or is out of date, or doesn't support the feature you want to use.
+So you start making raw HTTP requests. 
+But, even with the `best http library <http://docs.python-requests.org/en/latest/index.html>`_, passing in the right URL and options for every call is error prone and quickly becomes cumbersome for anything more than trivial scenarios.
 
-The Universal Client is a wrapper around the excellent  
-`Requests <http://docs.python-requests.org/en/latest/index.html>`_ HTTP library. A Client instance
-corresponds to a single endpoint in the api. use dot notation to navigate the api paths. You
-can set any Requests parameters on a client instance and all child instances will inherit those
-parameters.
+The Universal Client is a wrapper around the excellent `Requests <http://docs.python-requests.org/en/latest/index.html>`_ HTTP library.
+A Client instance corresponds to a single endpoint in the api.
+Use dot notation to navigate the api paths. You can set any Requests parameters on a client instance and all child instances will inherit those parameters.
 
 A quick example::
 
@@ -31,8 +26,9 @@ A quick example::
    >>> resp = images.get()
 
 
-The Client stores a complete api call. It is immutable - any modification returns a new client. This allows
-you to reuse endpoints over and over.
+The Client stores a complete api call.
+It is immutable - any modification returns a new client.
+This allows you to reuse endpoints over and over.
 
 Contents:
 

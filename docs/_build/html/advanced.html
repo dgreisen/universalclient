@@ -54,9 +54,10 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">davidsImages</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">dgreisen</span>
 </pre></div>
 </div>
-<p>is great if we are doing a bunch of stuff to davidsImages. But what if we want to be able to pass in the userid that isn&#8217;t
-known until runtime. That&#8217;s when the _ (underscore) method is used. The argument to _ will be added
-to the URL, just as if it were appended with dot notation:</p>
+<p>is great if we know we are going to do a bunch of stuff to davidsImages.
+But what if we want to be able to pass in a userid that isn&#8217;t known until runtime?
+That&#8217;s when the _ (underscore) method is used.
+The argument to _ will be added to the URL, just as if it were appended with dot notation:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">somebody</span> <span class="o">=</span> <span class="s">&quot;jsmith&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">somebodysImages</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="n">somebody</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">somebodysImages</span>
@@ -64,22 +65,23 @@ to the URL, just as if it were appended with dot notation:</p>
 </pre></div>
 </div>
 <p>Even better, the string passed to _ can be formatted with all the args passed to a request() (or get(), post(), etc.).
-Thus, we can make an endpoint for adding an image to an arbitrary users album:</p>
-<blockquote>
-<div>addImage = root.user._({}).images._({1}).setArgs(method=&#8221;put&#8221;)
-addImage.request(&#8220;dgreisen&#8221;, &#8220;birthdayBash&#8221;, files={&#8216;file&#8217;: open(&#8216;birthdayBash.jpg&#8217;, &#8216;rb&#8217;))
-&lt;Response [200]&gt;
-addImage.request(&#8220;jsmith&#8221;, &#8220;birthdayBash&#8221;, files={&#8216;file&#8217;: open(&#8216;birthdayBash.jpg&#8217;, &#8216;rb&#8217;))
-&lt;Response [200]&gt;</div></blockquote>
+Thus, we can make an endpoint for adding an arbitrary image to an arbitrary users album:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">addImage</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">_</span><span class="p">({})</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">_</span><span class="p">({</span><span class="mi">1</span><span class="p">})</span><span class="o">.</span><span class="n">setArgs</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&quot;put&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">addImage</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&quot;dgreisen&quot;</span><span class="p">,</span> <span class="s">&quot;birthdayBash&quot;</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;file&#39;</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;birthdayBash.jpg&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">))</span>
+<span class="go">&lt;Response [200]&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">addImage</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&quot;jsmith&quot;</span><span class="p">,</span> <span class="s">&quot;birthdayBash&quot;</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;file&#39;</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;birthdayBash.jpg&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">))</span>
+<span class="go">&lt;Response [200]&gt;</span>
+</pre></div>
+</div>
 <p>You can only use positional arguments to format the string since the keyword arguments are passed to requests.request().
-All arguments are passed to each string, so if you have multiple strings appended with _, you must use positional args
-properly.</p>
+All arguments are passed to each string, so if you have multiple strings appended with _, you must use positional args properly.</p>
 </div>
 <div class="section" id="data-formatting">
 <h2>Data formatting<a class="headerlink" href="#data-formatting" title="Permalink to this headline">¶</a></h2>
-<p>Sometimes the data you need to send to a specific endpoint has to be formatted in a specific way. You can perform this manipulation
-by adding a dataFilter. A dataFilter is a function that takes one argument, the data, and returns a single value, the data to
-be sent to the server. Data will be transformed just before it is sent in the request.</p>
+<p>Sometimes the data you need to send to a specific endpoint has to be formatted in a specific way.
+You can perform this manipulation by adding a dataFilter.
+A dataFilter is a function that takes one argument, the data, and returns a single value, the data to be sent to the server.
+Data will be transformed just before it is sent in the request.</p>
 <p>UniversalClient currently comes with one dataFilter built in, jsonFilter, which encodes the data as json.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">universalclient</span> <span class="kn">import</span> <span class="n">jsonFilter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">jdoe</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jane Doe&quot;</span><span class="p">,</span> <span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="s">&quot;jdoe@example.com&quot;</span><span class="p">},</span> <span class="n">dataFilter</span><span class="o">=</span><span class="n">jsonFilter</span><span class="p">)</span>
@@ -92,13 +94,13 @@ be sent to the server. Data will be transformed just before it is sent in the re
 <div class="section" id="oauth">
 <h2>Oauth<a class="headerlink" href="#oauth" title="Permalink to this headline">¶</a></h2>
 <p>Because UniversalClient is just Requests at heart, you can use <a class="reference external" href="https://github.com/litl/rauth">Rauth</a> for oauth authentication.
-To use, create a fully authenticated Rauth client (see <a class="reference external" href="https://rauth.readthedocs.org/en/latest/">Rauth documentation</a>). Then
-pass the fully authenticated client into your universal client.</p>
+To use, create a fully authenticated Rauth client (see <a class="reference external" href="https://rauth.readthedocs.org/en/latest/">Rauth documentation</a>).
+Then pass the fully authenticated client into your universal client.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">oauth</span><span class="p">(</span><span class="n">rauth_client</span><span class="p">)</span><span class="o">.</span><span class="n">images</span>
 </pre></div>
 </div>
-<p>The client then uses the rauth client to make requests, rather than a default Requests instance. Please note, this functionality
-has not been tested. Tests and bug reports are welcome.</p>
+<p>The client then uses the rauth client to make requests, rather than a default Requests instance.
+Please note, this functionality has not been tested. Tests and bug reports are welcome.</p>
 </div>
 </div>
 

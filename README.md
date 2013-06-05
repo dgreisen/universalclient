@@ -10,7 +10,7 @@ licensed client for quickly and easily interacting with any REST api.
 
 You want to use a cool api, but the python client doesn't exist, or is out of date, 
 or doesn't support the feature you want to use. So you start making raw HTTP
-requests but even with the [best HTTP library](http://docs.python-requests.org/en/latest/index.html)
+requests but, even with the [best HTTP library](http://docs.python-requests.org/en/latest/index.html),
 passing in the right URL and options for every call is error prone and quickly
 becomes cumbersome for anything more than trivial scenarios.
 

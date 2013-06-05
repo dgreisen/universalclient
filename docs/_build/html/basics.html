@@ -53,17 +53,18 @@
 <h1>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="creating-a-url">
 <h2>Creating a URL<a class="headerlink" href="#creating-a-url" title="Permalink to this headline">¶</a></h2>
-<p>UniversalClient is a wrapper around the excellent <a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">Requests</a>
-library for making HTTP requests. Lets create a client for a fictitious photo sharing service.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">universalClient</span> <span class="kn">import</span> <span class="n">Client</span>
+<p>UniversalClient is a wrapper around the excellent <a class="reference external" href="http://docs.python-requests.org/en/latest/index.html">Requests</a> library for making HTTP requests.
+Lets create a client for a fictitious photo sharing service.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">universalclient</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="go"># create a client pointing to myImages.com</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span>
 <span class="go">get: http://myImages.com</span>
 </pre></div>
 </div>
-<p>A client object is returned. In this case, the client object points to the URL &#8220;<a class="reference external" href="http://myImages.com">http://myImages.com</a>&#8221; and has defaulted
-to the &#8220;get&#8221; HTTP method. We can add to this base URL using dot notation. Adding an attribute to the client will
-return a new Client with the name of that attribute appended to the initial Client&#8217;s URL.</p>
+<p>A client object is returned.
+In this case, the client object points to the URL &#8220;<a class="reference external" href="http://myImages.com">http://myImages.com</a>&#8221; and has defaulted to the &#8220;get&#8221; HTTP method.
+We can add to this base URL using dot notation.
+Getting an attribute on the client will return a new Client with the name of that attribute appended to the initial Client&#8217;s URL.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">images</span>
 <span class="go">get: http://myImages.com/user</span>
 </pre></div>
@@ -80,44 +81,53 @@ return a new Client with the name of that attribute appended to the initial Clie
 </div>
 <div class="section" id="making-requests">
 <h2>Making requests<a class="headerlink" href="#making-requests" title="Permalink to this headline">¶</a></h2>
-<p>You can make the default request by calling client.request(), which returns a Requests response object. You can make
-a specific type of request by calling that function:</p>
-<blockquote>
-<div># make the default get request
-&gt;&gt;&gt; davidsImages.request()
-&lt;Response [200]&gt;
-# make a head request
-&gt;&gt;&gt; davidsImages.head()
-&lt;Response [200]&gt;</div></blockquote>
+<p>You can make the default request by calling client.request(), which returns a Requests response object.
+You can make a specific type of request by calling that function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;</span>
+<span class="go"># make the default get request</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">davidsImages</span><span class="o">.</span><span class="n">request</span><span class="p">()</span>
+<span class="go">&lt;Response [200]&gt;</span>
+<span class="go"># make a head request</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">davidsImages</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="go">&lt;Response [200]&gt;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
-<p>Any keyword argument available for Requests.request can be set on your client. You can do this when a client is created, any time
-after creation, or just before sending the request. Any kwargs passed to Client(), client.setArgs(), client.request(), or
-client.get(), client.post(), etc will be passed directly to request.request(),</p>
-<blockquote>
-<div><p># at creation:
-&gt;&gt;&gt; root = Client(&#8220;<a class="reference external" href="http://myImages.com">http://myImages.com</a>&#8221;, auth=(&#8216;user&#8217;, &#8216;pass&#8217;))</p>
-<p># updating any client after initial creation:
-&gt;&gt;&gt; uploadImage = root.user.dgreisen.images.setArgs(method=&#8221;put&#8221;)</p>
-<p># just before sending the request
-&gt;&gt;&gt; uploadImage.request(files={&#8216;file&#8217;: open(&#8216;birthdayBash.jpg&#8217;, &#8216;rb&#8217;))
-&lt;Response [200]&gt;</p>
-</div></blockquote>
+<p>Any keyword argument available for Requests.request can be set on your client.
+You can do this when a client is created, any time after creation, or just before sending the request.
+Any kwargs passed to Client(), client.setArgs(), client.request(), client.get(), or client.post(), etc will be passed directly to request.request(),</p>
+<p>At creation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;user&#39;</span><span class="p">,</span> <span class="s">&#39;pass&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Updating any client after initial creation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">uploadImage</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">dgreisen</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">setArgs</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&quot;put&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Just before sending the request</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">uploadImage</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;file&#39;</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;birthdayBash.jpg&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">))</span>
+<span class="go">&lt;Response [200]&gt;</span>
+</pre></div>
+</div>
 <p>You can display all the arguments:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">uploadImage</span><span class="o">.</span><span class="n">getArgs</span><span class="p">()</span>
 <span class="go">{&#39;_http&#39;: &lt;module &#39;requests&#39; from &#39;/usr/local/lib/python2.7/dist-packages/requests/__init__.pyc&#39;&gt;, &#39;method&#39;: &#39;put&#39;, &#39;auth&#39;: (&#39;user&#39;, &#39;pass&#39;), &#39;_path&#39;: [&#39;http://myImages.com&#39;, &#39;user&#39;, &#39;dgreisen&#39;, &#39;images&#39;]}</span>
 </pre></div>
 </div>
-<p>You will notice there are a couple of other keys/values in there starting with an underscore. Underscores keys are not passed to
-requests.request(). You can read about some of them in the <a class="reference internal" href="advanced.html"><em>Advanced</em></a> section.</p>
-<p>If you set an argument that already has a value, it will be overridden. You can also delete an existing value:</p>
+<p>You will notice there are a couple of other keys/values in there starting with an underscore.
+Underscores keys are not passed to requests.request().
+You can read about some of them in the <a class="reference internal" href="advanced.html"><em>Advanced</em></a> section.</p>
+<p>If you set an argument that already has a value, it will be overridden.
+You can also delete an existing value:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">getAllImages</span> <span class="o">=</span> <span class="n">uploadImage</span><span class="o">.</span><span class="n">delArgs</span><span class="p">(</span><span class="s">&quot;method&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;method&quot;</span> <span class="ow">in</span> <span class="n">getAllImages</span><span class="o">.</span><span class="n">getArgs</span><span class="p">()</span>
 <span class="go">False</span>
 </pre></div>
 </div>
-<p>Every key passed to delArgs will be deleted. No error will be thrown if an argument to be deleted does not exist.</p>
+<p>Every key passed to delArgs will be deleted.
+No error will be thrown if an argument to be deleted does not exist.</p>
 </div>
 </div>
 
