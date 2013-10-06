@@ -67,7 +67,7 @@ Just before sending the request::
 You can display all the arguments::
 
 	>>> uploadImage.getArgs()
-	{'_http': <module 'requests' from '/usr/local/lib/python2.7/dist-packages/requests/__init__.pyc'>, 'method': 'put', 'auth': ('user', 'pass'), '_path': ['http://myImages.com', 'user', 'dgreisen', 'images']}
+	{'_http': <module 'requests' from '/usr/local/lib/python2.7/dist-packages/requests/__init__.pyc'>, 'params': {'api_key': '123', 'size': 'full'}, 'method': 'put', 'auth': ('user', 'pass'), '_path': ['http://myImages.com', 'user', 'dgreisen', 'images']}
 
 You will notice there are a couple of other keys/values in there starting with an underscore.
 Underscore keys are not passed to requests.request(). 

@@ -1,1 +1,1 @@
-from universalclient import *
+from universalclient import Client, jsonFilter
