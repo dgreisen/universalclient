@@ -7,6 +7,7 @@ Creating a URL
 UniversalClient is a wrapper around the excellent `Requests <http://docs.python-requests.org/en/latest/index.html>`_ library for making HTTP requests.
 Lets create a client for a fictitious photo sharing service.
 
+::
    >>> from universalclient import Client
    # create a client pointing to myImages.com
    >>> Client("http://myImages.com")
@@ -17,11 +18,13 @@ In this case, the client object points to the URL "http://myImages.com" and has 
 We can add to this base URL using dot notation.
 Getting an attribute on the client will return a new Client with the name of that attribute appended to the initial Client's URL.
 
+::
 	>>> Client("http://myImages.com").images
 	get: http://myImages.com/user
 
 Clients are immutable:
 
+::
 	>>> root = Client("http://myImages.com").images
 	>>> davidsImages = root.user.dgreisen
 	>>> root
@@ -35,7 +38,7 @@ Making requests
 You can make the default request by calling client.request(), which returns a Requests response object.
 You can make a specific type of request by calling that function:
 
-	>>>
+::
 	# make the default get request
 	>>> davidsImages.request()	
 	<Response [200]>
@@ -52,19 +55,23 @@ Any kwargs passed to Client(), client.setArgs(), client.request(), client.get(),
 
 At creation:
 
+::
 	>>> root = Client("http://myImages.com", auth=('user', 'pass'))
 
 Updating any client after initial creation:
 
+::
 	>>> uploadImage = root.user.dgreisen.images.setArgs(method="put")
 
 Just before sending the request
 
+::
 	>>> uploadImage.request(files={'file': open('birthdayBash.jpg', 'rb'))
 	<Response [200]>
 
 You can display all the arguments:
 
+::
 	>>> uploadImage.getArgs()
 	{'_http': <module 'requests' from '/usr/local/lib/python2.7/dist-packages/requests/__init__.pyc'>, 'method': 'put', 'auth': ('user', 'pass'), '_path': ['http://myImages.com', 'user', 'dgreisen', 'images']}
 
@@ -75,6 +82,7 @@ You can read about some of them in the :doc:`advanced` section.
 If you set an argument that already has a value, it will be overridden.
 You can also delete an existing value:
 
+::
 	>>> getAllImages = uploadImage.delArgs("method")
 	>>> "method" in getAllImages.getArgs()
 	False

@@ -6,6 +6,7 @@ Creating a URL
 
 The URL we created in :doc:`basics` section,
 
+::
 	>>> root = Client("http://myImages.com").images
 	>>> davidsImages = root.user.dgreisen
 
@@ -14,6 +15,7 @@ But what if we want to be able to pass in a userid that isn't known until runtim
 That's when the _ (underscore) method is used.
 The argument to _ will be added to the URL, just as if it were appended with dot notation:
 
+::
 	>>> somebody = "jsmith"
 	>>> somebodysImages = root.user._(somebody)
 	>>> somebodysImages
@@ -22,6 +24,7 @@ The argument to _ will be added to the URL, just as if it were appended with dot
 Even better, the string passed to _ can be formatted with all the args passed to a request() (or get(), post(), etc.).
 Thus, we can make an endpoint for adding an arbitrary image to an arbitrary users album:
 
+::
 	>>> addImage = root.user._({}).images._({1}).setArgs(method="put")
 	>>> addImage.request("dgreisen", "birthdayBash", files={'file': open('birthdayBash.jpg', 'rb'))
 	<Response [200]>
@@ -41,6 +44,7 @@ Data will be transformed just before it is sent in the request.
 
 UniversalClient currently comes with one dataFilter built in, jsonFilter, which encodes the data as json.
 
+::
 	>>> from universalclient import jsonFilter
 	>>> response = root.user.jdoe.put(data={"name": "Jane Doe", "email": "jdoe@example.com"}, dataFilter=jsonFilter)
 	>>> response.request.body
@@ -55,6 +59,7 @@ Because UniversalClient is just Requests at heart, you can use `Rauth <https://g
 To use, create a fully authenticated Rauth client (see `Rauth documentation <https://rauth.readthedocs.org/en/latest/>`_).
 Then pass the fully authenticated client into your universal client.
 
+::
 	>>> root = Client("http://myImages.com").oauth(rauth_client).images
 
 The client then uses the rauth client to make requests, rather than a default Requests instance.
