@@ -120,9 +120,10 @@ class Client(object):
         """
         attributes = self._cloneAttributes()
         # update rather than replace attributes that can be updated
-        for k, v in kwargs.items():
-            if k in attributes and hasattr(v, "update") and hasattr(attributes[k], "update"):
-                attributes[k].update(v)
+
+        for k, v in attributes.items():
+            if k in kwargs and hasattr(v, "update") and hasattr(kwargs[k], "update"):
+                v.update(kwargs[k])
                 del kwargs[k]
         attributes.update(kwargs)
         return Client(**attributes)
@@ -131,6 +132,13 @@ class Client(object):
         """
         passed args will be deleted from the attributes hash. No error will
         throw if the attribute does not exist.
+
+        >>> x = Client('http://example.com').setArgs(hello='world')
+        >>> x.getArgs()['hello']
+        'world'
+        >>> y = x.delArgs('hello')
+        >>> 'hello' in y.getArgs()
+        False
         """
         attributes = self._cloneAttributes()
         for attr in args:
@@ -142,6 +150,16 @@ class Client(object):
         append a path part to the url. Should be used when the pathPart to
         append is not valid python dot notation. Can use positional, but
         not named, string formatters, ie {} or {3}, but not {name}.
+
+        >>> x = Client('http://example.com')._("{1}").hello._("{0}")
+        >>> x
+        get: http://example.com/{1}/hello/{0}
+
+        Can then replace those positionals with args passed to request
+
+        >>> resp = x.request('zero', 'one')
+        >>> resp.request.url
+        'http://example.com/one/hello/zero'
         """
         attributes = self._cloneAttributes()
         attributes["_path"].append(pathPart)
