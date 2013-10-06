@@ -49,7 +49,7 @@
 <h1>Advanced<a class="headerlink" href="#advanced" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="creating-a-url">
 <h2>Creating a URL<a class="headerlink" href="#creating-a-url" title="Permalink to this headline">¶</a></h2>
-<p>The URL we created in <a class="reference internal" href="basics.html"><em>Basics</em></a> section,</p>
+<p>The URL we created in <a class="reference internal" href="basics.html"><em>Basics</em></a> section:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">images</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">davidsImages</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">dgreisen</span>
 </pre></div>
@@ -82,7 +82,7 @@ All arguments are passed to each string, so if you have multiple strings appende
 You can perform this manipulation by adding a dataFilter.
 A dataFilter is a function that takes one argument, the data, and returns a single value, the data to be sent to the server.
 Data will be transformed just before it is sent in the request.</p>
-<p>UniversalClient currently comes with one dataFilter built in, jsonFilter, which encodes the data as json.</p>
+<p>UniversalClient currently comes with one dataFilter built in, jsonFilter, which encodes the data as json:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">universalclient</span> <span class="kn">import</span> <span class="n">jsonFilter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">jdoe</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Jane Doe&quot;</span><span class="p">,</span> <span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="s">&quot;jdoe@example.com&quot;</span><span class="p">},</span> <span class="n">dataFilter</span><span class="o">=</span><span class="n">jsonFilter</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">body</span>
@@ -95,7 +95,7 @@ Data will be transformed just before it is sent in the request.</p>
 <h2>Oauth<a class="headerlink" href="#oauth" title="Permalink to this headline">¶</a></h2>
 <p>Because UniversalClient is just Requests at heart, you can use <a class="reference external" href="https://github.com/litl/rauth">Rauth</a> for oauth authentication.
 To use, create a fully authenticated Rauth client (see <a class="reference external" href="https://rauth.readthedocs.org/en/latest/">Rauth documentation</a>).
-Then pass the fully authenticated client into your universal client.</p>
+Then pass the fully authenticated client into your universal client:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">oauth</span><span class="p">(</span><span class="n">rauth_client</span><span class="p">)</span><span class="o">.</span><span class="n">images</span>
 </pre></div>
 </div>
