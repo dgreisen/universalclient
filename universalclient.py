@@ -79,19 +79,51 @@ class Client(object):
         """
         provide a fully authenticated rauth oauth client
         """
-        self.setArgs(oauth=rauth)
+        return self.setArgs(oauth=rauth)
 
     def getArgs(self):
         """
-        return the attributes currently stored in this client object.
+        return the arguments currently stored in this client object.
+
+        >>> x = Client("example.com")
+        >>> args = x.getArgs()
+        >>> del args['_http'] # for testing purposes - args['_http'] different on every machine
+        >>> args
+        {'method': 'get', '_path': ['example.com']}
+
+        the returned arguments are actually deep copies - cannot be used to modify the client arguments
+
+        >>> args['method']='put'
+        >>> x.getArgs()['method']
+        'get'
+
         """
         return self._cloneAttributes()
 
     def setArgs(self, **kwargs):
         """
         passed kwargs will update and override existing attributes.
+
+        >>> x = Client("example.com").setArgs(params={"first": "Jane", "last": "Jones"}, method="post")
+        >>> y = x.setArgs(method="put")
+        >>> y.getArgs()["method"]
+        'put'
+        >>> y.getArgs()["params"]
+        {'last': 'Jones', 'first': 'Jane'}
+
+        if an existing attribute is a dict, and replacement is a dict,
+        then update the attribute with the new value
+
+        >>> y = x.setArgs(params={"first": "Jim"})
+        >>> y.getArgs()["params"]
+        {'last': 'Jones', 'first': 'Jim'}
         """
         attributes = self._cloneAttributes()
+        # update rather than replace attributes that can be updated
+        for k, v in kwargs.items():
+            if k in attributes and hasattr(v, "update") and hasattr(attributes[k], "update"):
+                attributes[k].update(v)
+                del kwargs[k]
         attributes.update(kwargs)
         return Client(**attributes)
 
@@ -139,3 +171,7 @@ class Client(object):
         return list(methods)
 
 jsonFilter = lambda data: json.dumps(data)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
