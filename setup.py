@@ -1,3 +1,5 @@
+from distutils.core import setup
+
 setup(
     name='UniversalClient',
     version='0.5.0',
@@ -7,7 +9,7 @@ setup(
     url='http://pypi.python.org/pypi/UniversalClient/',
     license='LICENSE.txt',
     description='A Universal REST api client for python.',
-    long_description=open('README.rst').read(),
+    long_description=open('README.txt').read(),
     install_requires=[
         "requests>=2.0.0",
         "rauth>=0.6.2",
