@@ -1,7 +1,8 @@
 Universal Client
 ================
 
-Universal Client is a `Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>`_ licensed client for quickly and easily interacting with any REST api.
+Universal Client is an `Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>`_ licensed client for quickly and easily interacting with any REST api.
+Universal Client is compatible with Python 2 and Python 3.
 
 You want to use a cool api, but the python client doesn't exist, or is out of date, or doesn't support the feature you want to use.
 So you start making raw HTTP requests. 
