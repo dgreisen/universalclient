@@ -2,6 +2,8 @@ Universal Client
 ================
 Python 2 and Python 3 Compatible
 
+Full docs a http://universal-client.readthedocs.org.
+
 Universal Client is an `Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>`_ licensed client for quickly and easily interacting with any REST api.
 
 You want to use a cool api, but the python client doesn't exist, or is out of date, or doesn't support the feature you want to use.
@@ -11,6 +13,10 @@ But, even with the `best http library <http://docs.python-requests.org/en/latest
 The Universal Client is a wrapper around the excellent `Requests <http://docs.python-requests.org/en/latest/index.html>`_ HTTP library.
 A Client instance corresponds to a single endpoint in the api.
 Use dot notation to navigate the api paths. You can set any Requests parameters on a client instance and all child instances will inherit those parameters.
+
+Installation::
+
+   pip install universalclient
 
 A quick example::
 
