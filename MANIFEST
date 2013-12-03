@@ -3,6 +3,9 @@ CHANGES.txt
 LICENSE.txt
 README.txt
 setup.py
+docs/advanced.rst
+docs/basics.rst
+docs/index.rst
 docs/_build/html/_sources/advanced.txt
 docs/_build/html/_sources/basics.txt
 docs/_build/html/_sources/index.txt
