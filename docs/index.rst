@@ -2,8 +2,9 @@ Universal Client
 ================
 Python 2 and Python 3 Compatible
 
-Docs: http://universal-client.readthedocs.org.
+Docs: https://universal-client.readthedocs.org
 Repository: https://github.com/dgreisen/universalclient
+PyPI: https://pypi.python.org/pypi/UniversalClient
 
 Universal Client is an `Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>`_ licensed client for quickly and easily interacting with any REST api.
 Universal Client is compatible with Python 2 and Python 3.
@@ -22,7 +23,7 @@ A quick example::
    # create a client pointing to google
    >>> google = Client("http://google.com")
    # set a google cookie so we get "personalized" results (Yay!)
-   >>> google = google.setArgs(cookies={"gv": "5d41402abc4b2a76b9719d911017c592"})
+   >>> google = google.cookies(gv="5d41402abc4b2a76b9719d911017c592")
    # get the google home page at http://google.com
    >>> resp = google.get()
    # create an end point to google images, which inherits the cookies

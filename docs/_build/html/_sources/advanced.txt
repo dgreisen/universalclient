@@ -22,7 +22,7 @@ The argument to _ will be added to the URL, just as if it were appended with dot
 Even better, the string passed to _ can be formatted with all the args passed to a request() (or get(), post(), etc.).
 Thus, we can make an endpoint for adding an arbitrary image to an arbitrary users album::
 
-	>>> addImage = root.user._({}).images._({1}).setArgs(method="put")
+	>>> addImage = root.user._({}).images._({1}).method("put")
 	>>> addImage.request("dgreisen", "birthdayBash", files={'file': open('birthdayBash.jpg', 'rb'))
 	<Response [200]>
 	>>> addImage.request("jsmith", "birthdayBash", files={'file': open('birthdayBash.jpg', 'rb'))

@@ -5,7 +5,7 @@ import json
 
 
 class Client(object):
-    methods = ("get", "post", "put", "delete", "head", "options", "trace", "connect")
+    _methods = ("get", "post", "put", "delete", "head", "options", "trace", "connect")
 
     def __init__(self, url="", oauth=None, **kwargs):
         _getattr = super(Client, self).__getattribute__
@@ -34,17 +34,48 @@ class Client(object):
         return "%s: %s" % (attributes["method"], self._getUrl())
 
     def __call__(self, *args, **kwargs):
+        """
+        if an http method is called, set the method to that method and make a request
+
+        if a method is called which actually exists on the client (e.g. request, getArgs, etc.)
+        call that method.
+
+        otherwise, update the arguments dict with the callees name, and the value of the arg or kwargs
+
+        >>> x = Client("example.com")._setArgs(params={"first": "Jane", "last": "Jones"}, method="post")
+        >>> y = x.method("put")
+        >>> y.getArgs()["method"]
+        u'put'
+
+        >>> y = x.params(first="Jim")
+        >>> y.getArgs()["params"]
+        {u'last': u'Jones', u'first': u'Jim'}
+
+        if not called with any arguments, delete the argument from the arguments dict
+
+        >>> y = x.params()
+        >>> "params" in y.getArgs()
+        False
+        """
         _getattr = super(Client, self).__getattribute__
         attributes = _getattr("_attributes")
         calledAttr = attributes["_path"].pop()
 
         # handle a method call (ie GET, POST)
-        methods = _getattr("methods")
+        methods = _getattr("_methods")
         if calledAttr.lower() in methods:
             # create new client with updated method, and call it
-            return self.setArgs(method=calledAttr.lower()).request(*args, **kwargs)
-
-        return _getattr(calledAttr)(*args, **kwargs)
+            return self._setArgs(method=calledAttr.lower()).request(*args, **kwargs)
+        try:
+            return _getattr(calledAttr)(*args, **kwargs)
+        except AttributeError:
+            # if there is no attribute to call, then we presume it is an attr to be added to the attribute dict
+            if args:
+                return self._setArgs(**{calledAttr: args[0]})
+            elif kwargs:
+                return self._setArgs(**{calledAttr: kwargs})
+            else:
+                return self._delArgs(calledAttr)
 
     def request(self, *args, **kwargs):
         """
@@ -58,7 +89,7 @@ class Client(object):
         passing as arguments any *args passed to request.
         """
         # update with any last-minute modifications to the attributes
-        c = self.setArgs(**kwargs) if kwargs else self
+        c = self._setArgs(**kwargs) if kwargs else self
         attributes = c._cloneAttributes()
         requests = attributes.pop("_http")
 
@@ -80,7 +111,7 @@ class Client(object):
         """
         provide a fully authenticated rauth oauth client
         """
-        return self.setArgs(oauth=rauth)
+        return self._setArgs(oauth=rauth)
 
     def getArgs(self):
         """
@@ -101,12 +132,12 @@ class Client(object):
         """
         return self._cloneAttributes()
 
-    def setArgs(self, **kwargs):
+    def _setArgs(self, **kwargs):
         """
         passed kwargs will update and override existing attributes.
 
-        >>> x = Client("example.com").setArgs(params={"first": "Jane", "last": "Jones"}, method="post")
-        >>> y = x.setArgs(method="put")
+        >>> x = Client("example.com")._setArgs(params={"first": "Jane", "last": "Jones"}, method="post")
+        >>> y = x._setArgs(method="put")
         >>> y.getArgs()["method"]
         u'put'
         >>> y.getArgs()["params"]
@@ -115,7 +146,7 @@ class Client(object):
         if an existing attribute is a dict, and replacement is a dict,
         then update the attribute with the new value
 
-        >>> y = x.setArgs(params={"first": "Jim"})
+        >>> y = x._setArgs(params={"first": "Jim"})
         >>> y.getArgs()["params"]
         {u'last': u'Jones', u'first': u'Jim'}
         """
@@ -129,15 +160,19 @@ class Client(object):
         attributes.update(kwargs)
         return Client(**attributes)
 
-    def delArgs(self, *args):
+    def setArgs(self, **kwargs):
+        warnings.warn("setArgs is deprecated; will be removed in 0.7. Change arg by calling method with arg name, e.g. client.method('get').", DeprecationWarning)
+        self._setArgs(self, **kwargs)
+
+    def _delArgs(self, *args):
         """
         passed args will be deleted from the attributes hash. No error will
         throw if the attribute does not exist.
 
-        >>> x = Client('http://example.com').setArgs(hello='world')
+        >>> x = Client('http://example.com')._setArgs(hello='world')
         >>> x.getArgs()['hello']
         u'world'
-        >>> y = x.delArgs('hello')
+        >>> y = x._delArgs('hello')
         >>> 'hello' in y.getArgs()
         False
         """
@@ -145,6 +180,10 @@ class Client(object):
         for attr in args:
             attributes.pop(attr)
         return Client(**attributes)
+
+    def delArgs(self, *args):
+        warnings.warn("delArgs is deprecated; will be removed in 0.7. Delete arg by calling method with arg name with no value, e.g. client.method().", DeprecationWarning)
+        self._delArgs(self, *args)
 
     def _(self, pathPart):
         """

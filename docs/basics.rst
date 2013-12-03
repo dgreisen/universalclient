@@ -48,7 +48,7 @@ Arguments
 
 Any keyword argument available for Requests.request can be set on your client.
 You can do this when a client is created, any time after creation, or just before sending the request.
-Any kwargs passed to Client(), client.setArgs(), client.request(), client.get(), or client.post(), etc will be passed directly to request.request(),
+Any kwargs passed to Client(), client.request(), client.get(), or any other client.<HTTP-METHOD>(), will be passed directly to request.request(),
 
 
 At creation::
@@ -57,7 +57,7 @@ At creation::
 
 Updating any client after initial creation::
 
-	>>> uploadImage = root.user.dgreisen.images.setArgs(method="put", params={"size":"full"})
+	>>> uploadImage = root.user.dgreisen.images.method("put").params(size="full")
 
 Just before sending the request::
 
@@ -78,9 +78,9 @@ Args that are dictionaries are updated rather than replaced.
 If you set an argument that already has a value, it will be overridden.
 You can also delete an existing value::
 
-	>>> getAllImages = uploadImage.delArgs("method")
+	>>> getAllImages = uploadImage.method()
+
 	>>> "method" in getAllImages.getArgs()
 	False
 
-Every key passed to delArgs will be deleted.
 No error will be thrown if an argument to be deleted does not exist.

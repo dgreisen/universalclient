@@ -97,13 +97,13 @@ You can make a specific type of request by calling that function:</p>
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <p>Any keyword argument available for Requests.request can be set on your client.
 You can do this when a client is created, any time after creation, or just before sending the request.
-Any kwargs passed to Client(), client.setArgs(), client.request(), client.get(), or client.post(), etc will be passed directly to request.request(),</p>
+Any kwargs passed to Client(), client.request(), client.get(), or any other client.&lt;HTTP-METHOD&gt;(), will be passed directly to request.request(),</p>
 <p>At creation:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://myImages.com&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;user&#39;</span><span class="p">,</span> <span class="s">&#39;pass&#39;</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;get&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;api_key&quot;</span><span class="p">:</span><span class="s">&quot;123&quot;</span><span class="p">})</span>
 </pre></div>
 </div>
 <p>Updating any client after initial creation:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">uploadImage</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">dgreisen</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">setArgs</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&quot;put&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;size&quot;</span><span class="p">:</span><span class="s">&quot;full&quot;</span><span class="p">})</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">uploadImage</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">dgreisen</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="s">&quot;put&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s">&quot;full&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Just before sending the request:</p>
@@ -113,7 +113,7 @@ Any kwargs passed to Client(), client.setArgs(), client.request(), client.get(),
 </div>
 <p>You can display all the arguments:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">uploadImage</span><span class="o">.</span><span class="n">getArgs</span><span class="p">()</span>
-<span class="go">{&#39;_http&#39;: &lt;module &#39;requests&#39; from &#39;/usr/local/lib/python2.7/dist-packages/requests/__init__.pyc&#39;&gt;, &#39;method&#39;: &#39;put&#39;, &#39;auth&#39;: (&#39;user&#39;, &#39;pass&#39;), &#39;_path&#39;: [&#39;http://myImages.com&#39;, &#39;user&#39;, &#39;dgreisen&#39;, &#39;images&#39;]}</span>
+<span class="go">{&#39;_http&#39;: &lt;module &#39;requests&#39; from &#39;/usr/local/lib/python2.7/dist-packages/requests/__init__.pyc&#39;&gt;, &#39;params&#39;: {&#39;api_key&#39;: &#39;123&#39;, &#39;size&#39;: &#39;full&#39;}, &#39;method&#39;: &#39;put&#39;, &#39;auth&#39;: (&#39;user&#39;, &#39;pass&#39;), &#39;_path&#39;: [&#39;http://myImages.com&#39;, &#39;user&#39;, &#39;dgreisen&#39;, &#39;images&#39;]}</span>
 </pre></div>
 </div>
 <p>You will notice there are a couple of other keys/values in there starting with an underscore.
@@ -123,13 +123,13 @@ You will also notice that the params object was updated with the new keys rather
 Args that are dictionaries are updated rather than replaced.</p>
 <p>If you set an argument that already has a value, it will be overridden.
 You can also delete an existing value:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">getAllImages</span> <span class="o">=</span> <span class="n">uploadImage</span><span class="o">.</span><span class="n">delArgs</span><span class="p">(</span><span class="s">&quot;method&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">getAllImages</span> <span class="o">=</span> <span class="n">uploadImage</span><span class="o">.</span><span class="n">method</span><span class="p">()</span>
+
 <span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;method&quot;</span> <span class="ow">in</span> <span class="n">getAllImages</span><span class="o">.</span><span class="n">getArgs</span><span class="p">()</span>
 <span class="go">False</span>
 </pre></div>
 </div>
-<p>Every key passed to delArgs will be deleted.
-No error will be thrown if an argument to be deleted does not exist.</p>
+<p>No error will be thrown if an argument to be deleted does not exist.</p>
 </div>
 </div>
 
