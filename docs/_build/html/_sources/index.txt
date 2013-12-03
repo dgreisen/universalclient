@@ -2,9 +2,9 @@ Universal Client
 ================
 Python 2 and Python 3 Compatible
 
-Docs: https://universal-client.readthedocs.org
-Repository: https://github.com/dgreisen/universalclient
-PyPI: https://pypi.python.org/pypi/UniversalClient
+| Docs: https://universal-client.readthedocs.org  
+| Repository: https://github.com/dgreisen/universalclient  
+| PyPI: https://pypi.python.org/pypi/UniversalClient
 
 Universal Client is an `Apache 2 <http://www.apache.org/licenses/LICENSE-2.0.html>`_ licensed client for quickly and easily interacting with any REST api.
 Universal Client is compatible with Python 2 and Python 3.
