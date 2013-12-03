@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
 import requests
 from copy import deepcopy
 import json
@@ -89,13 +90,13 @@ class Client(object):
         >>> args = x.getArgs()
         >>> del args['_http'] # for testing purposes - args['_http'] different on every machine
         >>> args
-        {'method': 'get', '_path': ['example.com']}
+        {u'method': u'get', u'_path': [u'example.com']}
 
         the returned arguments are actually deep copies - cannot be used to modify the client arguments
 
         >>> args['method']='put'
         >>> x.getArgs()['method']
-        'get'
+        u'get'
 
         """
         return self._cloneAttributes()
@@ -107,16 +108,16 @@ class Client(object):
         >>> x = Client("example.com").setArgs(params={"first": "Jane", "last": "Jones"}, method="post")
         >>> y = x.setArgs(method="put")
         >>> y.getArgs()["method"]
-        'put'
+        u'put'
         >>> y.getArgs()["params"]
-        {'last': 'Jones', 'first': 'Jane'}
+        {u'last': u'Jones', u'first': u'Jane'}
 
         if an existing attribute is a dict, and replacement is a dict,
         then update the attribute with the new value
 
         >>> y = x.setArgs(params={"first": "Jim"})
         >>> y.getArgs()["params"]
-        {'last': 'Jones', 'first': 'Jim'}
+        {u'last': u'Jones', u'first': u'Jim'}
         """
         attributes = self._cloneAttributes()
         # update rather than replace attributes that can be updated
@@ -135,7 +136,7 @@ class Client(object):
 
         >>> x = Client('http://example.com').setArgs(hello='world')
         >>> x.getArgs()['hello']
-        'world'
+        u'world'
         >>> y = x.delArgs('hello')
         >>> 'hello' in y.getArgs()
         False
@@ -192,4 +193,4 @@ jsonFilter = lambda data: json.dumps(data)
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
+    doctest.testmod(extraglobs={'absolute_import': absolute_import, 'print_function': print_function, 'unicode_literals': unicode_literals})
