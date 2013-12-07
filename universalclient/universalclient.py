@@ -44,12 +44,12 @@ class Client(object):
 
         >>> x = Client("example.com")._setArgs(params={"first": "Jane", "last": "Jones"}, method="post")
         >>> y = x.method("put")
-        >>> y.getArgs()["method"]
-        u'put'
+        >>> y.getArgs()["method"] == 'put'
+        True
 
         >>> y = x.params(first="Jim")
-        >>> y.getArgs()["params"]
-        {u'last': u'Jones', u'first': u'Jim'}
+        >>> y.getArgs()["params"] == {'last': 'Jones', 'first': 'Jim'}
+        True
 
         if not called with any arguments, delete the argument from the arguments dict
 
@@ -120,14 +120,14 @@ class Client(object):
         >>> x = Client("example.com")
         >>> args = x.getArgs()
         >>> del args['_http'] # for testing purposes - args['_http'] different on every machine
-        >>> args
-        {u'method': u'get', u'_path': [u'example.com']}
+        >>> args == {'method': 'get', '_path': ['example.com']}
+        True
 
         the returned arguments are actually deep copies - cannot be used to modify the client arguments
 
         >>> args['method']='put'
-        >>> x.getArgs()['method']
-        u'get'
+        >>> x.getArgs()['method'] == 'get'
+        True
 
         """
         return self._cloneAttributes()
@@ -138,17 +138,17 @@ class Client(object):
 
         >>> x = Client("example.com")._setArgs(params={"first": "Jane", "last": "Jones"}, method="post")
         >>> y = x._setArgs(method="put")
-        >>> y.getArgs()["method"]
-        u'put'
-        >>> y.getArgs()["params"]
-        {u'last': u'Jones', u'first': u'Jane'}
+        >>> y.getArgs()["method"] == 'put'
+        True
+        >>> y.getArgs()["params"] == {'last': 'Jones', 'first': 'Jane'}
+        True
 
         if an existing attribute is a dict, and replacement is a dict,
         then update the attribute with the new value
 
         >>> y = x._setArgs(params={"first": "Jim"})
-        >>> y.getArgs()["params"]
-        {u'last': u'Jones', u'first': u'Jim'}
+        >>> y.getArgs()["params"] == {'last': 'Jones', 'first': 'Jim'}
+        True
         """
         attributes = self._cloneAttributes()
         # update rather than replace attributes that can be updated
@@ -170,8 +170,8 @@ class Client(object):
         throw if the attribute does not exist.
 
         >>> x = Client('http://example.com')._setArgs(hello='world')
-        >>> x.getArgs()['hello']
-        u'world'
+        >>> x.getArgs()['hello'] == 'world'
+        True
         >>> y = x._delArgs('hello')
         >>> 'hello' in y.getArgs()
         False
