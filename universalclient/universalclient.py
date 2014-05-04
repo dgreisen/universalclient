@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import requests
 from copy import deepcopy
 import json
-
+import warnings
 
 class Client(object):
     _methods = ("get", "post", "put", "delete", "head", "options", "trace", "connect")
