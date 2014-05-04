@@ -132,7 +132,7 @@ class Client(object):
         """
         return self._cloneAttributes()
 
-    def _setArgs(self, **kwargs):
+    def _setArgs(self, *args, **kwargs):
         """
         passed kwargs will update and override existing attributes.
 
