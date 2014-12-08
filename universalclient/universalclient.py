@@ -5,7 +5,7 @@ import json
 import warnings
 
 class Client(object):
-    _methods = ("get", "post", "put", "delete", "head", "options", "trace", "connect")
+    _methods = ("get", "post", "put", "delete", "head", "options", "trace", "connect", "patch")
 
     def __init__(self, url="", oauth=None, **kwargs):
         _getattr = super(Client, self).__getattribute__
@@ -200,9 +200,15 @@ class Client(object):
         >>> resp = x.request('zero', 'one')
         >>> resp.request.url
         'http://example.com/one/hello/zero'
+
+        Will ensure the path part is a string:
+
+        >>> x = Client('http://example.com')._(1).hello
+        >>> x
+        get: http://example.com/1/hello
         """
         attributes = self._cloneAttributes()
-        attributes["_path"].append(pathPart)
+        attributes["_path"].append(str(pathPart))
         return Client(**attributes)
 
     def _cloneAttributes(self):

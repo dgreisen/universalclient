@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='UniversalClient',
-    version='0.6.3',
+    version='0.6.4',
     author='David Greisen',
     author_email='dgreisen@gmail.com',
     packages=['universalclient'],
