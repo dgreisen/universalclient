@@ -53,7 +53,7 @@ Any kwargs passed to Client(), client.request(), client.get(), or any other clie
 
 At creation::
 
-	>>> root = Client("http://myImages.com", auth=('user', 'pass'), method="get", params={"api_key":"123"})
+	>>> root = Client("http://myImages.com", auth=('user', 'pass'), method="get", params={"api_key":"123"}, headers={'Content-Type': 'application/json', 'Authorization': 'Bearer <api_key>'})
 
 Updating any client after initial creation::
 
